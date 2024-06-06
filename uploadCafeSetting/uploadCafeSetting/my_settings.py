@@ -6,5 +6,5 @@ DATABASES = {
         'PASSWORD':'mk2713!@',
         'HOST':'localhost',
         'PORT':'3306'
+		}
     }
-}
