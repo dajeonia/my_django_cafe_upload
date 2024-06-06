@@ -421,8 +421,7 @@ def main_function():
         for user in UserSetting.objects.all():
             print(user.naver_id, " 토큰 발급 중...")
             access_token = get_naver_token(driver, user)
-            if not access_token:
-                print(user.naver_id, "토큰 발급 실패: ", e)
+            if access_token == None:
                 continue
             print("토큰 발급 완료: ", access_token)
             print(user.naver_id, " 업로드")
