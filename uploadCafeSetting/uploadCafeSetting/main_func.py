@@ -418,36 +418,35 @@ def main_function():
         for user in UserSetting.objects.all():
             print(user.naver_id, " 토큰 발급 중...")
             access_token = get_naver_token(driver, user)
-            if access_token == None:
-                continue
-            print("토큰 발급 완료", access_token, sep='\n')
-            print(user.naver_id, " 업로드")
-            uploadList = BoardMatching.objects.filter(user_no = user.id)
-            for upload_item in uploadList:
-                try:
-                    url_get = upload_item.from_board_url
-                    if ('wantit' == url_get):
-                        way = '워닛'
-                        wantit_cafe_upload(driver, access_token, upload_item)
-                        res = [1, 1]
-                    elif ('naver_search' == url_get):
-                        way = '네이버 검색'
-                        if (d.hour in [8, 13, 17]):
-                            res = crawl_naver_search(driver, access_token, upload_item)
+            if access_token != None:
+                print("토큰 발급 완료", access_token, sep='\n')
+                print(user.naver_id, " 업로드")
+                uploadList = BoardMatching.objects.filter(user_no = user.id)
+                for upload_item in uploadList:
+                    try:
+                        url_get = upload_item.from_board_url
+                        if ('wantit' == url_get):
+                            way = '워닛'
+                            wantit_cafe_upload(driver, access_token, upload_item)
+                            res = [1, 0]
+                        elif ('naver_search' == url_get):
+                            way = '네이버 검색'
+                            if (d.hour in [8, 13, 17]):
+                                res = crawl_naver_search(driver, access_token, upload_item)
+                            else:
+                                res = [0, 0]
+                        elif ('band.us/' in url_get):
+                            way = '밴드'
+                            res = crawl_band_contents(driver, access_token, upload_item)
+                        elif ('cafe.naver.com/' in url_get):
+                            way = '카페 게시글'
+                            res = crawl_cafe_contents(driver, access_token, upload_item)
                         else:
-                            res = [0, 0]
-                    elif ('band.us/' in url_get):
-                        way = '밴드'
-                        res = crawl_band_contents(driver, access_token, upload_item)
-                    elif ('cafe.naver.com/' in url_get):
-                        way = '카페 게시글'
-                        res = crawl_cafe_contents(driver, access_token, upload_item)
-                    else:
-                        raise Exception("잘못된 URL 형식")
-                    print(f"{way} 업로드 성공 : {str(res[1])}, 실패 : {str(res[0])}")
-                except Exception as e:
-                    print(f"{way} 업로드 실패: ", e)
-                print("")
+                            raise Exception("잘못된 URL 형식")
+                        print(f"{way} 업로드 성공 : {str(res[1])}, 실패 : {str(res[0])}")
+                    except Exception as e:
+                        print(f"{way} 업로드 실패: ", e)
+            print("")
         driver.quit()
         deleteAllFilesInFolder('temp_img/')
         print("\n\n")
