@@ -6,7 +6,6 @@ import time
 
 # Create your views here.
 
-"""
 def index(request):
     time.sleep(3)
     os.system('python manage.py crontab remove')
@@ -14,4 +13,3 @@ def index(request):
     os.system('python manage.py crontab add')
     time.sleep(3)
     return HttpResponse({"success":True})
-"""
