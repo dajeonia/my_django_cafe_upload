@@ -144,10 +144,8 @@ def crawl_cafe_contents(driver, access_token, upload_item):
         try:
             time.sleep(50)
             adrs = "https://cafe.naver.com/ArticleRead.nhn?clubid="+upload_item.from_club_id+"&page=1&userDisplay=50&menuid="+upload_item.from_menu_id+"&boardtype=L&articleid=" + total_list[j][0] +"&referrerAllArticles=false"
-            print("driver.get(adrs)")
             driver.get(adrs)
             time.sleep(10)
-            print("driver.switch_to.frame('cafe_main')")
             driver.switch_to.frame('cafe_main')
             html = driver.page_source
             soup = BeautifulSoup(html, 'html.parser')
@@ -392,6 +390,7 @@ def crawl_band_contents(driver, access_token, upload_item):
     print("밴드 가져오기 성공")
     index = 0
     for article in reversed(articles):
+        time.sleep(10)
         try:
             if (index == 5):
                 break
@@ -406,7 +405,6 @@ def crawl_band_contents(driver, access_token, upload_item):
             print('업로드 실패', e)
             print(traceback.format_exc())
         index += 1
-        time.sleep(10)
     deleteAllFilesInFolder('temp_img/')
     return result
 
