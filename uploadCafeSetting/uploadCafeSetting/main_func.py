@@ -352,7 +352,6 @@ def upload_cafe_with_image(access_token, contentList, imgList, upload_item):
         print("Error Code:" + rescode)
 
 def upload_cafe_new(access_token, article, upload_item):
-# def upload_cafe_dajeon(access_token, article, clubid, menuid):
     header = "bearer " + access_token
     clubid = upload_item.to_club_id
     menuid = upload_item.to_menu_id
@@ -372,12 +371,12 @@ def upload_cafe_new(access_token, article, upload_item):
 
 def crawl_naver_search(driver, access_token, upload_item):
     result = [0 for _ in range(2)] 
-    article = get_naver_search(driver)
+    article = get_naver_search(30, driver)
     try:
-        upload_cafe_dajeon(access_token, article, 25628281, 36)
-        result[1]+=1
+        upload_cafe_new(access_token, article, upload_item)
+        result[1] += 1
     except Exception as e:
-        result[0]+=1
+        result[0] += 1
         print('업로드 실패', e)
         print(traceback.format_exc())
     deleteAllFilesInFolder('temp_img/')
@@ -435,7 +434,10 @@ def main_function():
                         res = [1, 1]
                     elif ('naver_search' == url_get):
                         way = '네이버 검색'
-                        res = crawl_naver_search(driver, access_token, upload_item)
+                        if (d.hour in [8, 13, 17]):
+                            res = crawl_naver_search(driver, access_token, upload_item)
+                        else:
+                            res = [0, 0]
                     elif ('band.us/' in url_get):
                         way = '밴드'
                         res = crawl_band_contents(driver, access_token, upload_item)
