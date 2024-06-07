@@ -64,7 +64,7 @@ def make_article(size, recruit_list):
         for keyword in content['keywords']:
             concat += "- " + keyword + "\n"
         concat += "링크: " + content['link'] + "\n"
-    article['content'] = concat
+    article['content'] = concat.replace('\n', '<br>')
     return (article)
 
 
