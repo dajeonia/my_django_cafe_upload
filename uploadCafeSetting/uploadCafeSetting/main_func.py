@@ -63,7 +63,6 @@ def get_naver_token(driver, user):
 
         print("권한 허용 찾고 띄우기...", end=' ')
         driver.get(req_url)
-        print("완료")
         
         try:
             time.sleep(3)
@@ -71,9 +70,9 @@ def get_naver_token(driver, user):
             time.sleep(1)
             driver.find_element(By.XPATH, '//*[@class="btn agree"]').click()
             time.sleep(1)
-            print("권한 허용 완료")
+            print("완료")
         except:
-            print("권한 이미 허용됨")
+            print("허용됨")
 
         time.sleep(1)
         redirect_url = driver.current_url
@@ -83,7 +82,6 @@ def get_naver_token(driver, user):
         url = "https://nid.naver.com/oauth2.0/token?grant_type=authorization_code" + "&client_id=" + naver_cid   + "&client_secret=" + naver_csec + "&redirect_uri=" + naver_redirect + "'&code=" + code + "&state=" + state
         
         headers = {'X-Naver-Client-Id': naver_cid, 'X-Naver-Client-Secret':naver_redirect}
-        print("토큰 발급 시도")
         response = requests.get(url,headers=headers)
         rescode = response.status_code
         token = ''
@@ -387,7 +385,6 @@ def crawl_band_contents(driver, access_token, upload_item):
     except Exception as e:
         print("잘못된 밴드 예외 발생", e)
         return result
-    print("밴드 가져오기 성공")
     index = 0
     for article in reversed(articles):
         time.sleep(10)
@@ -416,11 +413,10 @@ def main_function():
         checkFolder('temp_img/')
         driver = driver_new()
         for user in UserSetting.objects.all():
-            print(user.naver_id, " 토큰 발급 중...")
+            print(user.naver_id, " 업로드")
             access_token = get_naver_token(driver, user)
             if access_token != None:
-                print("토큰 발급 완료", access_token, sep='\n')
-                print(user.naver_id, " 업로드")
+                print("ACCESS_TOKEN: ", access_token)
                 uploadList = BoardMatching.objects.filter(user_no=user.id)
                 for upload_item in uploadList:
                     try:
@@ -446,6 +442,8 @@ def main_function():
                         print(f"{way} 업로드 성공 : {str(res[1])}, 실패 : {str(res[0])}")
                     except Exception as e:
                         print(f"{way} 업로드 실패: ", e)
+            else:
+                print("ACCESS_TOKEN: 토큰 발급 실패")
             print("")
         driver.quit()
         deleteAllFilesInFolder('temp_img/')
