@@ -11,9 +11,9 @@ def get_html(driver):
     search_box.send_keys("SAP 컨설턴트 채용")
     search_box.send_keys(Keys.RETURN)
 
-	driver.find_element(By.XPATH, '//*[@id="main_pack"]/section[1]/div/div[6]/a').click()
-	driver.find_element(By.XPATH, '//*[@id="content"]/div[1]/section/div[1]/div/div[2]/a[3]').click()
-	sleep(3)
+    driver.find_element(By.XPATH, '//*[@id="main_pack"]/section[1]/div/div[6]/a').click()
+    # driver.find_element(By.XPATH, '//*[@id="content"]/div[1]/section/div[1]/div/div[2]/a[3]').click()
+    sleep(3)
 
     for i in range(10):
         driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
@@ -56,16 +56,14 @@ def make_article(size, recruit_list):
         concat += f"""
 제목: {content['title']}
 부제: {content['subtitle']}
-태그
 """
-		for tag in content['tags']:
-			concat += "- " + tag + "\n"
-		concat += "키워드\n"
-		for keyword in content['keywords']:
-			concat += "* " + keyword + "\n"
-		concat += "링크: " + content['link'] + "\n"
-	article['content'] = concat
-	return (article)
+        for tag in content['tags']:
+            concat += "- " + tag + "\n"
+        for keyword in content['keywords']:
+            concat += "- " + keyword + "\n"
+        concat += "링크: " + content['link'] + "\n"
+    article['content'] = concat
+    return (article)
 
 
 def get_naver_search(size, driver):
