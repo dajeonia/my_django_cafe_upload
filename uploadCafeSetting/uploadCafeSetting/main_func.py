@@ -423,7 +423,7 @@ def main_function():
             access_token = get_naver_token(driver, user)
             if access_token == None:
                 continue
-            print("토큰 발급 완료: ", access_token)
+            print("토큰 발급 완료", access_token, sep='\n')
             print(user.naver_id, " 업로드")
             uploadList = BoardMatching.objects.filter(user_no = user.id)
             for upload_item in uploadList:
@@ -444,10 +444,10 @@ def main_function():
                         res = crawl_cafe_contents(driver, access_token, upload_item)
                     else:
                         raise Exception("잘못된 URL 형식")
-                    print("성공 : ", str(res[1]), ", 실패 : ", str(res[0]))
+                    print(f"{way} 업로드 성공 : {str(res[1])}, 실패 : {str(res[0])}")
                 except Exception as e:
-                    print(f"{way} 가져오기 업로드 실패: ", e)
-
+                    print(f"{way} 업로드 실패: ", e)
+                print("")
         driver.quit()
         deleteAllFilesInFolder('temp_img/')
         print("\n\n")
