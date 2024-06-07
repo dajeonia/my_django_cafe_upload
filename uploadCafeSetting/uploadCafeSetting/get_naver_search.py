@@ -39,7 +39,7 @@ def get_recruit_from_naver(html):
         keywords = d.find_all('a', 'link_keyword')
         for tag in tags:
             recruit['tags'].append(tag.text)
-        if ("까지" in recruit['tags'][-1])
+        if "까지" in recruit['tags'][-1]:
             recruit['tags'].pop()
         for keyword in keywords:
             recruit['keywords'].append(keyword.text)

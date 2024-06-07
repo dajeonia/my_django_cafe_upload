@@ -421,7 +421,7 @@ def main_function():
             if access_token != None:
                 print("토큰 발급 완료", access_token, sep='\n')
                 print(user.naver_id, " 업로드")
-                uploadList = BoardMatching.objects.filter(user_no = user.id)
+                uploadList = BoardMatching.objects.filter(user_no=user.id)
                 for upload_item in uploadList:
                     try:
                         url_get = upload_item.from_board_url
