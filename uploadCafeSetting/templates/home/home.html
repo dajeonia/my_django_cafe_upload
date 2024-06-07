@@ -9,7 +9,7 @@
     <div style="display:flex; justify-content: center;
         width: 100%; height: 100%;">
         <div style="display:flex; justify-content: center;
-            width: 80%; height: 80%; min-width: 1200px; 
+            width: 80%; height: 80%; min-width: 1300px; 
             min-height: 500px;">
             <div style="width:29%; margin: 10px; background-color:#f9f9fb; border:1px solid #cfcfd8;">
                 <div style="display: flex; width: 100%;">
@@ -42,7 +42,7 @@
                         {% for upload_time in upload_time_list %}
                         <div style="display:flex; justify-content:space-around; height:40px;">
                             <input style="align-self:center;" type="radio" id="chosen_id" name="chosen_id" value={{upload_time.id}}>
-                            <label style="align-self:center;" for={{upload_time.id}}>{{upload_time.upload_hr}}:{{upload_time.upload_mn}}</label><br>
+                            <label style="align-self:center;" for={{upload_time.id}}>{{upload_time.upload_hr}}시</label><br>
 
                         </div>
                         {% endfor %}
@@ -52,28 +52,10 @@
                                 <label for="upload_time_hr">업로드 시간(시)</label>
                                 <input style="width:30px" type="text" id="upload_time_hr" name="upload_time_hr" value=""><br>
                             </div>
-                            <div
-                                style="display:flex; justify-content:space-around; flex-direction:column; margin:20px;">
-                                <label for="upload_time_mn">업로드 시간(분)</label>
-                                <input style="width:30px" type="text" id="upload_time_mn" name="upload_time_mn" value=""><br>
-                            </div>
                         </div>
                         <div style="display:flex; justify-content:space-around;">
                             <input type="submit" name="create_upload_time" value="추가">
                             <input type="submit" name="delete_upload_time" value="삭제">
-                        </div>
-                    </form>
-                </div>
-                <div>
-                    <h2 style="text-align:center;">Crontab 로그</h2>
-                    <div style="background:white; margin:10px;">
-                        {{cron_result}}
-                    </div>
-                    <form action="{% url 'home:index' %}" method="post">
-                        {% csrf_token %}
-                        <div style="display:flex; justify-content:space-around;">
-                            <button type="submit" name="refresh_cron">갱신</button>
-                            <button type="submit" name="remove_cron">삭제</button>
                         </div>
                     </form>
                 </div>
@@ -120,33 +102,33 @@
                                 style="display:flex; justify-content:space-around; flex-direction:column; margin:20px;">
                                 <input type="hidden" id="user_id" name="user_id" value={{selected_user_info.id}}>
                                 <label for="from_board_url">가져올 게시판 url</label>
-                                <input type="text" id="from_board_url" name="from_board_url" value=""><br>
+                                <input type="text" id="from_board_url" name="from_board_url" value={{selected_upload_item.from_board_url}}><br>
 
                                 <label for="from_club_id">가져올 게시판 clubid</label>
-                                <input type="text" id="from_club_id" name="from_club_id" value=""><br>
+                                <input type="text" id="from_club_id" name="from_club_id" value={{selected_upload_item.from_club_id}}><br>
 
                                 <label for="from_menu_id">가져올 게시판 menuid</label>
-                                <input type="text" id="from_menu_id" name="from_menu_id" value=""><br>
+                                <input type="text" id="from_menu_id" name="from_menu_id" value={{selected_upload_item.from_menu_id}}><br>
 
                                 <div style="margin-top:20px;">
                                     <label for="from_article_no">선택할 게시글 번호(start)</label>
-                                    <input style="width:30px" type="text" id="from_article_no" name="from_article_no" value=""><br>
+                                    <input style="width:30px" type="text" id="from_article_no" name="from_article_no" value={{selected_upload_item.from_article_no}}><br>
                                 </div>
                             </div>
                             <div
                                 style="display:flex; justify-content:space-around; flex-direction:column; margin:20px;">
                                 <label for="to_board_url">업로드할 게시판 url</label>
-                                <input type="text" id="to_board_url" name="to_board_url" value=""><br>
+                                <input type="text" id="to_board_url" name="to_board_url" value={{selected_upload_item.to_board_url}}><br>
 
                                 <label for="to_club_id">업로드할 게시판 clubid</label>
-                                <input type="text" id="to_club_id" name="to_club_id" value=""><br>
+                                <input type="text" id="to_club_id" name="to_club_id" value={{selected_upload_item.to_club_id}}><br>
 
                                 <label for="to_menu_id">업로드할 게시판 menuid</label>
-                                <input type="text" id="to_menu_id" name="to_menu_id" value=""><br>
+                                <input type="text" id="to_menu_id" name="to_menu_id" value={{selected_upload_item.to_menu_id}}><br>
 
                                 <div style="margin-top:20px;">
                                     <label for="to_article_no">선택할 게시글 번호(end)</label>
-                                    <input style="width:30px" type="text" id="to_article_no" name="to_article_no" value=""><br>
+                                    <input style="width:30px" type="text" id="to_article_no" name="to_article_no" value={{selected_upload_item.to_article_no}}><br>
                                 </div>
                             </div>
                             <div
@@ -180,6 +162,12 @@
                                 <td>{{upload_item.to_menu_id}}</td>
                                 <td>{{upload_item.from_article_no}}</td>
                                 <td>{{upload_item.to_article_no}}</td>
+                                <td><form action="{% url 'home:index' %}" method="post">
+                                    {% csrf_token %}
+                                    <input type="hidden" id="user_id" name="user_id" value={{selected_user_info.id}}>
+                                    <input type="hidden" id="upload_item_id" name="upload_item_id" value={{upload_item.id}}>
+                                    <input type="submit" name="update_upload_item" value="수정">
+                                </form></td>
                                 <td><form action="{% url 'home:index' %}" method="post">
                                     {% csrf_token %}
                                     <input type="hidden" id="user_id" name="user_id" value={{selected_user_info.id}}>
