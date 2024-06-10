@@ -45,7 +45,7 @@ def get_articles(token, band_key):
             article = {}
             article['number'] = n
             article['author'] = item['author']['name']
-            article['subject'] = "[SAP 프로젝트 구인] " + item['content'].split("\n")[0]
+            article['subject'] = item['content'].split("\n")[0]
             article['content'] = item['content'].replace('\n', '<br>')
             article['id'] = item['post_key']
             article['created_at'] = convert_to_datetime(item['created_at'])
