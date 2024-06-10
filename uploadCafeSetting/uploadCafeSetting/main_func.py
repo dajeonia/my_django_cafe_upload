@@ -385,15 +385,15 @@ def crawl_band_contents(driver, access_token, upload_item):
     except Exception as e:
         print("잘못된 밴드 예외 발생", e)
         return result
-    index = 0
     if upload_item.from_club_id == 1:
         prefix = "[SAP 프로젝트 구인] "
     else:
         prefix = "[일반/정규 채용] "
+    index = 0
     for article in reversed(articles):
         time.sleep(10)
         try:
-            if (index == 5):
+            if (index == upload_item.from_article_no):
                 break
             if (article['id'] in upload_item.uploaded_list):
                 continue
