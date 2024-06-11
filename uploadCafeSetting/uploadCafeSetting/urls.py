@@ -24,4 +24,5 @@ urlpatterns = [
     # path('admin/', admin.site.urls),
     path('home/', include('home.urls')),
     # path('cron/', include('user_setting.urls')),
+    # path('redirect/', views.redirect)
 ]

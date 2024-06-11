@@ -385,7 +385,7 @@ def crawl_band_contents(driver, access_token, upload_item):
     except Exception as e:
         print("잘못된 밴드 예외 발생", e)
         return result
-    if upload_item.from_club_id == 1:
+    if int(upload_item.from_club_id) != 0:
         prefix = "[SAP 프로젝트 구인] "
     else:
         prefix = "[일반/정규 채용] "
