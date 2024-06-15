@@ -3,8 +3,6 @@ import requests
 from datetime import datetime
 from bs4 import BeautifulSoup
 
-band_token ='ZQAAAS__GLH_jlSZ6JERtocaz84lJHDf4KPLCevoFN5dCk3pBewjmkkhphqU70NkWjCOE3ECNeUC3G-_VYLv8_wbUNX5dwXl2EsWxTLJHQ8JDVrT'
-
 def convert_to_datetime(ms):
     timestamp_s = ms / 1000.0
     dt_object = datetime.fromtimestamp(timestamp_s)
@@ -17,7 +15,7 @@ def get_my_band_list(token):
         bands = res.json()
         return (bands['result_data']['bands'])
     else:
-        return (0)
+        raise Exception("유효하지 않은 밴드 토큰입니다.")
 
 def get_title_from_url(url):
     if "band.us/band/" not in url:
@@ -56,13 +54,11 @@ def get_articles(token, band_key):
         return (0)
 
 
-def get_band_article(url):
+def get_band_article(band_token, url):
     key = get_band_key(band_token, url)
     if key == 0:
-        raise Exception("가입되지 않았거나 잘못된 URL입니다.")
+        raise Exception("가입되지 않았거나 잘못된 밴드 URL입니다.")
     list = get_articles(band_token, key)
     if list == 0:
         raise Exception("목록을 가져오는 데 실패하였습니다.")
     return (list)
-
-# band_token = 'ZQAAARzsjS9ambaV0vg0Mda6g8mchdEN164KIF7LDVPq1vpoBPYxEd-ark4wCmCs2f8Oc2dIazazSC_vlfgM2T2kA90aooZ0qCvQ2xU55w9OryBW'
