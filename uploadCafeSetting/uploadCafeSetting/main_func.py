@@ -378,20 +378,20 @@ def crawl_naver_search(driver, access_token, upload_item):
     deleteAllFilesInFolder('temp_img/')
     return result
 
-def crawl_band_contents(driver, access_token, upload_item):
+def crawl_band_contents(driver, access_token, upload_item, band_token):
     result = [0 for _ in range(2)] 
     try:
-        articles = get_band_article(upload_item.from_board_url)
+        articles = get_band_article(band_token, upload_item.from_board_url)
     except Exception as e:
-        print("잘못된 밴드 예외 발생", e)
+        print("잘못된 밴드 예외 발생: ", e)
         return result
-    if int(upload_item.from_club_id) != 0:
+    if int(upload_item.from_club_id) == 1:
         prefix = "[SAP 프로젝트 구인] "
     else:
         prefix = "[일반/정규/임시/알바 채용] "
     index = 0
     for article in reversed(articles):
-        time.sleep(10)
+        time.sleep(15)
         try:
             if (index == upload_item.from_article_no):
                 break
@@ -438,7 +438,7 @@ def main_function():
                                 res = [0, 0]
                         elif ('band.us/' in url_get):
                             way = '밴드'
-                            res = crawl_band_contents(driver, access_token, upload_item)
+                            res = crawl_band_contents(driver, access_token, upload_item, user.band_token)
                         elif ('cafe.naver.com/' in url_get):
                             way = '카페 게시글'
                             res = crawl_cafe_contents(driver, access_token, upload_item)
