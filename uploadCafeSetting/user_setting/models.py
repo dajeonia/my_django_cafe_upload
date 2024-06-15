@@ -9,13 +9,18 @@ class UserSetting(models.Model):
     naver_cid : 개발자센터 cid
     naver_csec : 개발자센터 csecret
     
+    band_token: 밴드 token
+
     is_active : 활성화 여부
+
     """
     id = models.AutoField(primary_key=True)
     naver_id = models.CharField(max_length=30)
     naver_pw = models.CharField(max_length=30)
     naver_cid = models.CharField(max_length=30)
     naver_csec = models.CharField(max_length=30)
+
+    band_token = models.CharField(max_length=200, null=True, blank=True, default='')
 
     class Meta:
         db_table = 'user_setting'

@@ -38,6 +38,7 @@ def index(request):
         update_user.naver_pw = request.POST['naver_pw']
         update_user.naver_cid = request.POST['naver_cid']
         update_user.naver_csec = request.POST['naver_csec']
+        update_user.band_token = request.POST['band_token']
         update_user.save()
         return render(request, 'home/home.html', 
         {
@@ -46,7 +47,7 @@ def index(request):
         })
     elif 'create_user' in request.POST:
         user = UserSetting(naver_id=request.POST['naver_id'], naver_pw=request.POST['naver_pw'],
-        naver_cid = request.POST['naver_cid'], naver_csec = request.POST['naver_csec'])
+        naver_cid = request.POST['naver_cid'], naver_csec = request.POST['naver_csec'], band_token=request.POST['band_token'])
         user.save()
         return render(request, 'home/home.html', 
         {
