@@ -388,7 +388,7 @@ def crawl_band_contents(driver, access_token, upload_item):
     if int(upload_item.from_club_id) != 0:
         prefix = "[SAP 프로젝트 구인] "
     else:
-        prefix = "[일반/정규 채용] "
+        prefix = "[일반/정규/임시/알바 채용] "
     index = 0
     for article in reversed(articles):
         time.sleep(10)
