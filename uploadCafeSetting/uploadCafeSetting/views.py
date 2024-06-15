@@ -1,5 +1,5 @@
 from django.http import HttpResponse, JsonResponse
-from .main_func import main_function
+from .main_func import *
 from django.shortcuts import render
 
 import os
@@ -7,9 +7,6 @@ import os
 def test(request):
     main_function()
     return HttpResponse(status=200)
-
-def redirect(request):
-    return render(request, 'redirect.html')
 
 def addCron(request):
     os.system('python manage.py crontab add')

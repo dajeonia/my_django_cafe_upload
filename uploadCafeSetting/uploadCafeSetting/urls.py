@@ -21,8 +21,8 @@ from django.urls import include, path
 from . import views
 
 urlpatterns = [
-    # path('admin/', admin.site.urls),
     path('home/', include('home.urls')),
+    # path('test/', views.test)
     # path('cron/', include('user_setting.urls')),
-    # path('redirect/', views.redirect)
+    # path('admin/', admin.site.urls),
 ]
