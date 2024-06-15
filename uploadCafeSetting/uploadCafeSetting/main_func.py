@@ -347,7 +347,7 @@ def upload_cafe_with_image(access_token, contentList, imgList, upload_item):
     else:
         print("Error Code:" + rescode)
 
-def upload_cafe_new(access_token, article, upload_item):
+def upload_cafe_by_article(access_token, article, upload_item):
     header = "bearer " + access_token
     clubid = upload_item.to_club_id
     menuid = upload_item.to_menu_id
@@ -369,7 +369,7 @@ def crawl_naver_search(driver, access_token, upload_item):
     result = [0 for _ in range(2)] 
     article = get_naver_search(30, driver)
     try:
-        upload_cafe_new(access_token, article, upload_item)
+        upload_cafe_by_article(access_token, article, upload_item)
         result[1] += 1
     except Exception as e:
         result[0] += 1
@@ -385,10 +385,10 @@ def crawl_band_contents(driver, access_token, upload_item, band_token):
     except Exception as e:
         print("잘못된 밴드 예외 발생: ", e)
         return result
-    if int(upload_item.from_club_id) == 1:
-        prefix = "[SAP 프로젝트 구인] "
+    if upload_item.from_club_id == '1':
+        prefix = "[SAP 프로젝트 구인]"
     else:
-        prefix = "[일반/정규/임시/알바 채용] "
+        prefix = "[일반/정규/임시/알바 채용]"
     index = 0
     for article in reversed(articles):
         time.sleep(15)
@@ -397,8 +397,8 @@ def crawl_band_contents(driver, access_token, upload_item, band_token):
                 break
             if (article['id'] in upload_item.uploaded_list):
                 continue
-            article['subject'] = prefix + article['subject']
-            upload_cafe_new(access_token, article, upload_item)
+            article['subject'] = prefix + ' ' + article['subject']
+            upload_cafe_by_article(access_token, article, upload_item)
             upload_item.uploaded_list += article['id'] + '\n'
             upload_item.save()
             result[1]+=1
