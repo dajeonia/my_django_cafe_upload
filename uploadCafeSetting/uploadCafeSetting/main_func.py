@@ -367,7 +367,7 @@ def upload_cafe_by_article(access_token, article, upload_item):
 
 def crawl_naver_search(driver, access_token, upload_item):
     result = [0 for _ in range(2)] 
-    article = get_naver_search(30, driver)
+    article = get_naver_search(upload_item.from_article_no, driver)
     try:
         upload_cafe_by_article(access_token, article, upload_item)
         result[1] += 1
@@ -429,7 +429,7 @@ def main_function():
                         if ('wantit' == url_get):
                             way = '워닛'
                             wantit_cafe_upload(driver, access_token, upload_item)
-                            res = [1, 0]
+                            res = [0, 1]
                         elif ('naver_search' == url_get):
                             way = '네이버 검색'
                             if (d.hour in [8, 13, 17]):

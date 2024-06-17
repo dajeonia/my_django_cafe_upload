@@ -52,7 +52,7 @@ def make_article(size, recruit_list):
     recruit_list = recruit_list[:size]
     article = {}
     now = datetime.now()
-    article['subject'] = now.strftime("[SAP 컨설턴트 및 ABAP 채용공고] %Y년%m월%d일 %H시(30건)")
+    article['subject'] = now.strftime(f"[SAP 컨설턴트 및 ABAP 채용공고] %Y년%m월%d일 %H시({size}건)")
     concat = ""
     for content in recruit_list:
         concat += f"""
