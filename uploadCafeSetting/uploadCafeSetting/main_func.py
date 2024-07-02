@@ -360,10 +360,14 @@ def upload_cafe_by_article(access_token, article, upload_item):
     response = urllib.request.urlopen(request, context=ssl._create_unverified_context())
     rescode = response.getcode()
     if(rescode==200):
-        response_body = response.read()
-        print(response_body.decode('utf-8'))
+        response_body = response.read().decode('utf-8')
+        print(response_body)
+        loaded = json.loads(response_body)
+        ret = loaded['message']['result']['articleUrl']
     else:
-        print("error code:" + rescode)
+        print("error code: " + rescode)
+        ret = ""
+    return (ret)
 
 def crawl_naver_search(driver, access_token, upload_item):
     result = [0 for _ in range(2)] 
