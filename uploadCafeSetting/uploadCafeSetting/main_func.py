@@ -373,7 +373,10 @@ def crawl_naver_search(driver, access_token, upload_item):
     result = [0 for _ in range(2)] 
     article = get_naver_search(upload_item.from_article_no, driver)
     try:
-        upload_cafe_by_article(access_token, article, upload_item)
+        url = upload_cafe_by_article(access_token, article, upload_item)
+        if url != "":
+            upload_item.uploaded_list = url + '\n' + upload_item.uploaded_list
+            upload_item.save()
         result[1] += 1
     except Exception as e:
         result[0] += 1
