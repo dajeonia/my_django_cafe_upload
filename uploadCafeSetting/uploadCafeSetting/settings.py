@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'user_setting',
     'board_matching',
     'upload_time',
+    'api',
 ]
 
 MIDDLEWARE = [
